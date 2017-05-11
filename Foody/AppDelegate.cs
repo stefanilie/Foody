@@ -21,9 +21,7 @@ namespace Foody
 			// Override point for customization after application launch.
 			// If not required for your application you can safely delete this method
 
-			NavigatorController navController = new NavigatorController();
-
-			Window.RootViewController = new LoginView();
+			Window.RootViewController = NavigatorController.instance;
 
 			return true;
 		}
