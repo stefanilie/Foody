@@ -41,16 +41,16 @@ namespace Foody
 
 		public void SetupTextfields()
 		{
-			txtUserName = new UITextField(new CGRect(this.View.Frame.GetMidX() - 75, 120, 150, 40));
+			txtUserName = new UITextField(new CGRect(this.View.Frame.GetMidX() - 75, 170, 150, 40));
 			txtUserName.Placeholder = "username";
-			txtUserName.TextColor = CostumColors.PURPLE;
+			txtUserName.TextColor = CostumColors.ORANGE;
 			txtUserName.TextAlignment = UITextAlignment.Center;
 			txtUserName.AdjustsFontSizeToFitWidth = true;
 			txtUserName.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
 
-			txtPassword = new UITextField(new CGRect(this.View.Frame.GetMidX() - 75, 170, 150, 40));
+			txtPassword = new UITextField(new CGRect(this.View.Frame.GetMidX() - 75, 220, 150, 40));
 			txtPassword.Placeholder = "password";
-			txtPassword.TextColor = CostumColors.PURPLE;
+			txtPassword.TextColor = CostumColors.ORANGE;
 			txtPassword.SecureTextEntry = true;
 			txtPassword.TextAlignment = UITextAlignment.Center;
 			txtPassword.AdjustsFontSizeToFitWidth = false;
@@ -61,27 +61,29 @@ namespace Foody
 		public void SetupButtons()
 		{
 			btnLogin = UIButton.FromType(UIButtonType.Custom);
-			btnLogin = new UIButton(new CGRect(15, 240, View.Frame.GetMidX() - 20, 40));
+			btnLogin = new UIButton(new CGRect(15, 280, View.Frame.GetMidX() - 20, 40));
 			btnLogin.SetTitle("Login", UIControlState.Normal);
 			btnLogin.BackgroundColor = CostumColors.SKY_BLUE;
-			btnLogin.SetTitleColor(CostumColors.ORANGE, UIControlState.Normal);
-			btnLogin.SetTitleColor(CostumColors.PURPLE, UIControlState.Selected);
+			btnLogin.SetTitleColor(CostumColors.PURPLE, UIControlState.Normal);
 			btnLogin.TitleLabel.AdjustsFontSizeToFitWidth = true;
 			btnLogin.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
+			btnLogin.Font = UIFont.FromName("Helvetica-Bold", 20f);
 
 			btnSignUp = UIButton.FromType(UIButtonType.Custom);
-			btnSignUp = new UIButton(new CGRect(View.Frame.GetMidX() + 10, 240, View.Frame.GetMidX() - 20, 40));
+			btnSignUp = new UIButton(new CGRect(View.Frame.GetMidX() + 10, 280, View.Frame.GetMidX() - 20, 40));
 			btnSignUp.SetTitle("SignUp", UIControlState.Normal);
 			btnSignUp.BackgroundColor = CostumColors.SKY_BLUE;
-			btnSignUp.SetTitleColor(CostumColors.ORANGE, UIControlState.Normal);
+			btnSignUp.SetTitleColor(CostumColors.PURPLE, UIControlState.Normal);
 			btnSignUp.TitleLabel.AdjustsFontSizeToFitWidth = true;
 			btnSignUp.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
+			btnSignUp.Font = UIFont.FromName("Helvetica-Bold", 20f);
 
 		}
 
 		public override void ViewDidLoad()
 		{
 			this.myView = new UIView(this.View.Frame);
+			setupDB();
 			View.AddSubview(myView);
 			SetupButtons();
 			SetupTextfields();
@@ -124,6 +126,12 @@ namespace Foody
 						null, "OK", null).Show();
 				}
 
+			};
+
+			btnSignUp.TouchUpInside += (sender, e) =>
+			{
+				Console.WriteLine(this._pathToDB);
+				NavigatorController.instance.PushViewController(new SignUpView(this._pathToDB), true);
 			};
 
 

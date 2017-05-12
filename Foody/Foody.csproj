@@ -131,6 +131,7 @@
     <Compile Include="CostumColors.cs" />
     <Compile Include="NewsFeed.cs" />
     <Compile Include="Models.cs" />
+    <Compile Include="SignUp.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
