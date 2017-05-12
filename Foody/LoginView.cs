@@ -1,9 +1,10 @@
 ﻿using System;
 using UIKit;
 using CoreGraphics;
-using Foundation;
 using System.Drawing;
-using System.Data;
+using System.IO;
+using SQLite;
+using Foundation;
 
 namespace Foody
 {
@@ -17,9 +18,25 @@ namespace Foody
 		private float bottom = 0.0f;           // bottom point
 		private float offset = -150.0f;          // extra offset
 		private bool moveViewUp = false;           // which direction are we moving
+		public SQLiteConnection connection;
 
 		public LoginView()
 		{
+		}
+
+		public void setupDB()
+		{
+			var documents = Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory()));
+			this._pathToDB = Path.Combine(documents, "movie_db_sqlite-net.db");
+			Console.WriteLine("path to db: " + this._pathToDB.ToString());
+			using (this.connection = new SQLiteConnection(_pathToDB))
+			{
+				//this.connection.DropTable<UserModel>();
+				var res = connection.Query<UserModel>("SELECT name FROM sqlite_master WHERE type='table' AND name='Users'");
+				if (res.Count == 0)
+					this.connection.CreateTable<UserModel>();
+				Console.WriteLine("Database created successfully!");
+			}
 		}
 
 		public void SetupTextfields()
@@ -76,8 +93,37 @@ namespace Foody
 
 			btnLogin.TouchUpInside += (sender, e) =>
 			{
-				
-				NavigatorController.instance.PushViewController(new NewsFeed(), true);
+				bool isUser = false;
+				try
+				{
+					using (this.connection = new SQLiteConnection(_pathToDB))
+					{
+						var users = connection.Query<UserModel>("SELECT * FROM Users");
+						foreach (var user in users)
+						{
+							if (user.username == txtUserName.Text)
+							{
+								if (user.password == this.txtPassword.Text)
+									isUser = true;
+							}
+						}
+						//Console.WriteLine("User retreived:"+users.ToString());
+					}
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine("EROARE DE SELECT!:" + ex.Message);
+				}
+				if (isUser)
+				{
+					NavigatorController.instance.PushViewController(new NewsFeed(), true);
+				}
+				else
+				{
+					new UIAlertView("Error!", "Username or password incorrect!",
+						null, "OK", null).Show();
+				}
+
 			};
 
 
