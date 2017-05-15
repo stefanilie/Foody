@@ -7,7 +7,6 @@ namespace Foody
 		public static NavigatorController instance = new NavigatorController();
 		public NavigatorController()
 		{
-			this.PushViewController(new LoginView(), false);
 		}
 	}
 }

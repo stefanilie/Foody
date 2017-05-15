@@ -12,7 +12,10 @@ namespace Foody
 
 		public override void ViewDidLoad()
 		{
-			
+			UITableView table = new UITableView(this.View.Bounds);
+			string[] items = new string[] { "voma", "voma", "voma", "voma", "voma", "voma", "voma", "voma", "voma", "voma", "voma", "voma", "voma", "voma", "voma", "voma", "voma" };
+			table.Source = new NewsFeedSource(items);
+			Add(table);
 			base.ViewDidLoad();
 		}
 	}

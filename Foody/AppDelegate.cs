@@ -22,6 +22,7 @@ namespace Foody
 			// If not required for your application you can safely delete this method
 
 			Window.RootViewController = NavigatorController.instance;
+			NavigatorController.instance.PushViewController(new LoginView(), true);
 
 			return true;
 		}

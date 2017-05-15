@@ -122,8 +122,13 @@ namespace Foody
 				}
 				else
 				{
-					new UIAlertView("Error!", "Username or password incorrect!",
-						null, "OK", null).Show();
+					UIAlertView alert = new UIAlertView()
+					{
+						Title = "Error",
+						Message = "Username or password invalid"
+					};
+					alert.AddButton("OK");
+					alert.Show();
 				}
 
 			};
